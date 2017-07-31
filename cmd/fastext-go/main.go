@@ -14,11 +14,11 @@ import (
 func main() {
 	var opts = struct {
 		Positional struct {
-			Command   string `required:"yes"`
-			ModelFile string `required:"yes"`
-			TestFile  string `required:"yes"`
-			K         int    `optional:"yes"` // Defaults to 0
-		} `positional-args:"yes"`
+			Command   string
+			ModelFile string
+			TestFile  string
+			K         int
+		} `positional-args:"yes" required:"yes"`
 	}{}
 
 	var parser = flags.NewParser(&opts, flags.IgnoreUnknown)

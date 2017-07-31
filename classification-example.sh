@@ -41,4 +41,4 @@ make fasttext-go
 
 ./fasttext predict "${RESULTDIR}/dbpedia.bin" "${DATADIR}/dbpedia.test" > "${RESULTDIR}/dbpedia.test.predict"
 
-./fasttext-go predict "${RESULTDIR}/dbpedia.bin" "${DATADIR}/dbpedia.test" > "${RESULTDIR}/dbpedia.test.predict-go"
+./fasttext-go predict "${RESULTDIR}/dbpedia.bin" "${DATADIR}/dbpedia.test" 1 > "${RESULTDIR}/dbpedia.test.predict-go"
