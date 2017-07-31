@@ -5,14 +5,19 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime/pprof"
 	"time"
 
 	"github.com/brightsparc/fasttextgo"
 	flags "github.com/jessevdk/go-flags"
 )
 
+// make fasttext-go && ./fasttext-go predict-prob result/dbpedia.bin data/dbpedia.test 1 -p main.pprof > nul
+// go tool pprof ./fasttext-go main.pprof
+
 func main() {
 	var opts = struct {
+		CPUProfile string `short:"p" long:"cpuprofile" description:"Enable cpu profile"`
 		Positional struct {
 			Command   string
 			ModelFile string
@@ -25,6 +30,16 @@ func main() {
 	_, err := parser.Parse()
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	// Enable CPU profile
+	if opts.CPUProfile != "" {
+		f, err := os.Create(opts.CPUProfile)
+		if err != nil {
+			log.Fatal(err)
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
 	}
 
 	// Load model
