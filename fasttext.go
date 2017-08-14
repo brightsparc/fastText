@@ -41,9 +41,10 @@ func PredictK(sentence string, k int) (probs []float32, labels []string, err err
 	probs = make([]float32, k)
 	labels = make([]string, k)
 
+	// Convert input setence to C string and pass reference to allocated probs
 	p := C.predictK(C.CString(sentence), C.int(k), (**C.float)(unsafe.Pointer(&probs[0])), 64)
-	// TODO: How do we check for null pointer being returned
 
+	// Convert labels back to Go strings, freeing memory
 	q := ((*[1 << 30]*C.char)(unsafe.Pointer(p)))[:k]
 	for i, cs := range q {
 		labels[i] = C.GoString(cs)
